@@ -1,0 +1,69 @@
+/*
+ * Fingaboru : Enhance your single page app transitions
+ * Source : http://github.com/prenaudin/fingaboru
+ *
+ * Copyright (c) 2014 Pierre Renaudin
+ * Licensed under the MIT license.
+ */
+
+@import 'bourbon'
+
+$fingaboru-page-transition-duration: 500ms
+
+[data-fingaboru-page]
+  position: relative
+  top: 1
+  left: 0
+  width: 100%
+  height: 100%
+  -webkit-overflow-scrolling: touch
+  overflow-x: hidden
+  visibility: hidden
+  z-index: 0
+  padding: 2rem 4rem 0
+  backface-visibility: hidden
+  +transform(translate3d(0, 0, 0))
+  +transform-style(preserve-3d)
+  display: none
+
+  &.page-active
+    display: block
+    visibility: visible
+    z-index: 10
+
+  &.page-animating
+    overflow: hidden
+    z-index: 100
+    position: absolute
+
+  &.slide-from-left
+    +animation(slideFromLeft $fingaboru-page-transition-duration forwards ease-in-out)
+  &.slide-to-left
+    +animation(slideToLeft $fingaboru-page-transition-duration forwards ease-in-out)
+  &.slide-from-right
+    +animation(slideFromRight $fingaboru-page-transition-duration forwards ease-in-out)
+  &.slide-to-right
+    +animation(slideToRight $fingaboru-page-transition-duration forwards ease-in-out)
+
+
++keyframes (slideFromRight)
+  from
+    +transform(translateX(100%))
+
++keyframes (slideToRight)
+  from
+    opacity: 1
+  to
+    opacity: 0
+    +transform(translateX(100%))
+
++keyframes (slideFromLeft)
+  from
+    +transform(translateX(-100%))
+
++keyframes (slideToLeft)
+  from
+    opacity: 1
+  to
+    opacity: 0
+    +transform(translateX(-100%))

@@ -1,6 +1,6 @@
 /*
- * Tartare : AN AWESOME WAY TO RENDER MIXED CONTENT IN A RESPONSIVE GRID
- * Source : http://github.com/prenaudin/tartare
+ * Fingaboru : Enhance your single page app transitions
+ * Source : http://github.com/prenaudin/fingaboru
  *
  * Copyright (c) 2014 Pierre Renaudin
  * Licensed under the MIT license.
@@ -9,180 +9,168 @@
 +function ($) {
   'use strict';
 
-  // UTILITIES methods
-  var throttle = function (fn, threshhold, scope) {
-    threshhold || (threshhold = 250);
-    var last,
-        deferTimer;
-    return function () {
-      var context = scope || this;
-
-      var now = +new Date(),
-          args = arguments;
-      if (last && now < last + threshhold) {
-        // hold on to it
-        clearTimeout(deferTimer);
-        deferTimer = setTimeout(function () {
-          last = now;
-          fn.apply(context, args);
-        }, threshhold);
-      } else {
-        last = now;
-        fn.apply(context, args);
-      }
-    };
+  var animationEndEventNames = {
+    'WebkitAnimation' : 'webkitAnimationEnd',
+    'OAnimation' : 'oAnimationEnd',
+    'msAnimation' : 'MSAnimationEnd',
+    'animation' : 'animationend'
   }
 
-  // TARTARE PUBLIC CLASS DEFINITION
+  var transitionEndEventNames = {
+    'WebkitTransition' : 'webkitTransitionEnd',
+    'OTransition' : 'oTransitionEnd',
+    'msTransition' : 'MSTransitionEnd',
+    'transition' : 'transitionend'
+  }
+
+  // FINGABORU PUBLIC CLASS DEFINITION
   // ===============================
 
-  var Tartare = function (element, options) {
+  var Fingaboru = function (element, options) {
     this.type       =
     this.options    =
     this.$element   = null
 
-    // internal grid status
-    this.left          = 0
-    this.top           = 0
-    this.rows          = 0
-    this.columns       = 0
-    this.numberPerRow  = null
-    this.itemWidth     = null
-    this.currentIndex  = 0
-
-    this.init('tartare', element, options)
+    this.init('fingaboru', element, options)
   }
 
-   Tartare.DEFAULTS = {
-    maxwidth     : 250,
-    gutter       : 15,
-    itemSelector : '.grid-item',
-    height       : null
+   Fingaboru.DEFAULTS = {
+     pageIndex     : 1,
+     pageSelector  : '[data-fingaboru-page]'
   }
 
-  Tartare.prototype.init = function (type, element, options) {
+  Fingaboru.prototype.init = function (type, element, options) {
     this.type       = type
     this.$element   = $(element)
     this.options    = this.getOptions(options)
-    this.itemHeight = this.options.height
-    this.refresh()
+    this.$pages     = this.$element.find(this.options.pageSelector)
 
-    var that = this
-    $(window).on('resize.tartare', throttle(function(){
-       that.refresh()
-    }, 200))
+    this.transitionEndEventName      = this.getTransitionEndEventNames()
+    this.animationEndEventName       = this.getAnimationEndEventNames()
+    this.transitionAnimationEndEvent = this.animationEndEventName + ' ' + this.transitionEndEventName
+
+    this.from = this.$pages.first().addClass('page-active')
+    this.to   = null
   }
 
-  Tartare.prototype.initItems = function() {
-    this.$items = this.$element.find(this.options.itemSelector)
+  Fingaboru.prototype.getDefaults = function () {
+    return Fingaboru.DEFAULTS
   }
 
-  Tartare.prototype.getDefaults = function () {
-    return Tartare.DEFAULTS
-  }
-
-  Tartare.prototype.getOptions = function (options) {
-    if(!options) options = this.options
+  Fingaboru.prototype.getOptions = function (options) {
     options = $.extend({}, this.getDefaults(), options)
     return options
   }
 
-  Tartare.prototype.getItemHeight = function (el) {
-    return this.itemHeight || this.options.height || $(el).height()
+  Fingaboru.prototype.getTransitionEndEventNames = function () {
+    return this.getEndEventNames( transitionEndEventNames )
   }
 
-  Tartare.prototype.compute = function () {
-    var containerWidth = this.$element.width()
-    this.numberPerRow  = Math.floor((containerWidth + this.options.gutter) / (this.options.maxwidth + this.options.gutter)) + 1
-    this.itemWidth     = Math.floor((containerWidth + this.options.gutter) / this.numberPerRow - this.options.gutter)
-    this.itemHeight    = this.getItemHeight()
-
-    var rows = Math.ceil(this.$items.length/this.numberPerRow)
-    var containerHeight = rows * ( this.itemHeight + this.options.gutter )
-    this.$element.css('height', containerHeight + 'px')
+  Fingaboru.prototype.getAnimationEndEventNames = function () {
+    return this.getEndEventNames( animationEndEventNames )
   }
 
-  Tartare.prototype.placeItems = function (startIndex) {
-    this.currentIndex  = startIndex ? startIndex : 0
-    var that = this
-    this.$items.each(function(i, el){
-      that.place(el)
-    })
+  Fingaboru.prototype.getEndEventNames = function (obj) {
+    var events = []
+    for ( var eventName in obj ) {
+      events.push( obj[ eventName ] )
+    }
+    return events.join(' ')
   }
 
-  Tartare.prototype.place = function (el, index) {
-    index = index !== undefined ? index : this.currentIndex
-    var column = index%this.numberPerRow + 1
-    var row    = Math.floor(index/this.numberPerRow)
-    var margin = 0
-    if((index + 1) % this.numberPerRow !== 0){
-      margin = this.options.gutter
+  Fingaboru.prototype.goto = function(pageIndex) {
+    var diff = pageIndex - this.options.pageIndex
+    if(diff > 0)
+      this.transitionPage(pageIndex, 'slide-from-right', 'slide-to-left')
+    else
+      this.transitionPage(pageIndex, 'slide-from-left', 'slide-to-right')
+    this.options.pageIndex = pageIndex
+  }
+
+  Fingaboru.prototype.transitionPage = function( transitionPage, transitionInEffect, transitionOutEffect ) {
+
+    if ( this.isAnimating ) {
+      return false
     }
 
-    this.itemHeight = this.getItemHeight(el)
+    this.isAnimating      = true
+    this.isCurrentPageEnd = false
+    this.isNextPageEnd    = false
+    this.transitionInEffect  = transitionInEffect
+    this.transitionOutEffect = transitionOutEffect
 
-    this.left   = (column - 1) * (this.itemWidth + this.options.gutter)
-    this.top    = (row) * ( this.itemHeight + this.options.gutter )
+    // Get Pages
+    this.from = this.$element.find('[data-fingaboru-page].page-active')
+    this.to   = this.$element.find('[data-fingaboru-page="' + transitionPage + '"]')
 
-    $(el).css({
-      'width'    : this.itemWidth + 'px',
-      'left'     : this.left + 'px',
-      'top'      : this.top + 'px',
-      'position' : 'absolute'
+    // Add this class to prevent scroll to be displayed
+    this.to.addClass('page-animating page-active ' + this.transitionInEffect)
+    this.from.addClass('page-animating')
+
+    // Set Transition Class
+    this.from.addClass(this.transitionOutEffect)
+
+    var self= this
+
+    this.to.on( this.transitionAnimationEndEvent, function() {
+
+      self.to.off( self.transitionAnimationEndEvent )
+      self.isNextPageEnd = true
+
+      if ( self.isCurrentPageEnd ) {
+        self.resetTransition()
+      }
     })
-    this.currentIndex++
+
+    this.from.on( this.transitionAnimationEndEvent, function () {
+
+      self.from.off( this.transitionAnimationEndEvent )
+      self.isCurrentPageEnd = true
+
+      if ( self.isNextPageEnd ) {
+        self.resetTransition()
+      }
+    })
   }
 
-  Tartare.prototype.append = function(el) {
-    this.place(el)
-    this.$element.append(el)
-    this.initItems()
-    this.compute()
+  Fingaboru.prototype.resetTransition = function() {
+    this.isAnimating      = false
+    this.isCurrentPageEnd = false
+    this.isNextPageEnd    = false
+
+    this.from.removeClass('page-animating page-active ' + this.transitionOutEffect)
+    this.to.removeClass('page-animating ' + this.transitionInEffect)
+
+    $("html").removeClass("md-perspective")
   }
 
-  Tartare.prototype.prepend = function(el) {
-    this.place(el, 0)
-    this.$element.prepend(el)
-    this.compute()
-    this.placeItems(1)
-    this.initItems()
-  }
-
-  Tartare.prototype.refresh = function () {
-    delete this.itemHeight
-    this.initItems()
-    this.compute()
-    this.placeItems()
-  }
-
-  Tartare.prototype.destroy = function () {
-    $(window).off('resize.tartare')
+  Fingaboru.prototype.destroy = function () {
     this.$element.off('.' + this.type).removeData(this.type)
   }
 
-  // TARTARE PLUGIN DEFINITION
+  // FINGABORU PLUGIN DEFINITION
   // =========================
-  var old = $.fn.tartare
+  var old = $.fn.fingaboru
 
-  $.fn.tartare = function (option, params) {
+  $.fn.fingaboru = function (option, params) {
     return this.each(function () {
       var $this   = $(this)
-      var data    = $this.data('tartare')
+      var data    = $this.data('fingaboru')
       var options = typeof option == 'object' && option
 
       if (!data && option == 'destroy') return
-      if (!data) $this.data('tartare', (data = new Tartare(this, options)))
+      if (!data) $this.data('fingaboru', (data = new Fingaboru(this, options)))
       if (typeof option == 'string') data[option](params)
     })
   };
 
-  $.fn.tartare.Constructor = Tartare
+  $.fn.fingaboru.Constructor = Fingaboru
 
-  // TARTARE NO CONFLICT
+  // FINGABORU NO CONFLICT
   // ===================
 
-  $.fn.tartare.noConflict = function () {
-    $.fn.tartare = old
+  $.fn.fingaboru.noConflict = function () {
+    $.fn.fingaboru = old
     return this
   }
 

@@ -1,0 +1,125 @@
+/* Fingaboru : Enhance your single page app transitions
+ * Source : http://github.com/prenaudin/fingaboru
+ *
+ * Copyright (c) 2014 Pierre Renaudin
+ * Licensed under the MIT license.
+ */
+[data-fingaboru-page] {
+  position: relative;
+  top: 1;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  visibility: hidden;
+  z-index: 0;
+  padding: 2rem 4rem 0;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  display: none; }
+  [data-fingaboru-page].page-active {
+    display: block;
+    visibility: visible;
+    z-index: 10; }
+  [data-fingaboru-page].page-animating {
+    overflow: hidden;
+    z-index: 100;
+    position: absolute; }
+  [data-fingaboru-page].slide-from-left {
+    -webkit-animation: slideFromLeft 500ms forwards ease-in-out;
+    -moz-animation: slideFromLeft 500ms forwards ease-in-out;
+    animation: slideFromLeft 500ms forwards ease-in-out; }
+  [data-fingaboru-page].slide-to-left {
+    -webkit-animation: slideToLeft 500ms forwards ease-in-out;
+    -moz-animation: slideToLeft 500ms forwards ease-in-out;
+    animation: slideToLeft 500ms forwards ease-in-out; }
+  [data-fingaboru-page].slide-from-right {
+    -webkit-animation: slideFromRight 500ms forwards ease-in-out;
+    -moz-animation: slideFromRight 500ms forwards ease-in-out;
+    animation: slideFromRight 500ms forwards ease-in-out; }
+  [data-fingaboru-page].slide-to-right {
+    -webkit-animation: slideToRight 500ms forwards ease-in-out;
+    -moz-animation: slideToRight 500ms forwards ease-in-out;
+    animation: slideToRight 500ms forwards ease-in-out; }
+
+@-webkit-keyframes slideFromRight {
+  from {
+    -webkit-transform: translateX(100%); } }
+
+@-moz-keyframes slideFromRight {
+  from {
+    -moz-transform: translateX(100%); } }
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(100%); } }
+
+@-webkit-keyframes slideToRight {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(100%); } }
+
+@-moz-keyframes slideToRight {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    -moz-transform: translateX(100%); } }
+
+@keyframes slideToRight {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%); } }
+
+@-webkit-keyframes slideFromLeft {
+  from {
+    -webkit-transform: translateX(-100%); } }
+
+@-moz-keyframes slideFromLeft {
+  from {
+    -moz-transform: translateX(-100%); } }
+
+@keyframes slideFromLeft {
+  from {
+    transform: translateX(-100%); } }
+
+@-webkit-keyframes slideToLeft {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(-100%); } }
+
+@-moz-keyframes slideToLeft {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    -moz-transform: translateX(-100%); } }
+
+@keyframes slideToLeft {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100%); } }

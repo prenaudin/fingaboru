@@ -2,152 +2,38 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Tartare - An awesome way to render mixed content in a responsive grid</title>
+  <title>Fingaboru - Enhance your single page app transitions</title>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href="../src/fingaboru.css" rel="stylesheet">
 
   <!-- jQuery. -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-beta1/jquery.js"></script>
   <!-- Load local lib and tests. -->
-  <script src="../src/tartare.js"></script>
+  <script src="../src/fingaboru.js"></script>
 
   <script>
-    var items = [
-      {
-        title: 'Darwin',
-        image: 'http://distilleryimage6.s3.amazonaws.com/af526f98c7c111e386540002c9d4e906_6.jpg'
-      },
-      {
-        title: 'Clothes',
-        image: 'http://origincache-prn.fbcdn.net/924314_256586044524096_1484980217_a.jpg'
-      },
-      {
-        title: 'The Road to SF',
-        image: 'http://distilleryimage4.s3.amazonaws.com/f110530aac3c11e3a805125842f3867c_6.jpg'
-      },
-      {
-        title: 'Hot Cross Bun',
-        html : '<div class="caption-title">Hot Cross Bun recipe</div><div class="caption-description">Traditional spiced, sticky glazed fruit buns with pastry crosses. Served as a classic Easter treat, the buns can also be enjoyed at any time of year.</div>',
-      },
-      {
-        title: 'Roast Leg of Lamb with Rosemary',
-        html : '<div class="caption-title">Roast Leg of Lamb with Rosemary</div><div class="caption-description">This leg of lamb is marinated overnight with fresh rosemary, garlic, mustard, honey and lemon zest. Be prepared for many requests for seconds!</div>',
-        image: 'http://images.media-allrecipes.com/userphotos/140x140/00/38/19/381973.jpg'
-      },
-      {
-        title: 'love.zip',
-        icon: 'heart-o'
-      },
-      {
-        title: 'Italia',
-        image: 'http://distilleryimage2.s3.amazonaws.com/fdc03546ad1f11e394f212fe06fbf87e_6.jpg'
-      },
-      {
-        title: 'Productive Routine',
-        html : '<div class="caption-title">Productive Routine</div><div class="caption-description">Costello\'s methodical modus operandi includes ironclad alibis involving his lover, Jane (Nathalie Delon). Having carried out a contract on a nightclub owner, he is seen leaving the scene by several witnesses, including piano player Valérie (Cathy Rosier). Their statements are inconsistent but the investigating officer (François Périer) believes Costello is his man.</div>',
-        image: 'https://www.evernote.com/shard/s37/sh/83c744f5-b3c8-4018-b010-1d87ebd2595a/099d9c6ba464bdd066d459bc2f68ec5c/thm/note/83c744f5-b3c8-4018-b010-1d87ebd2595a'
-      },
-      {
-        title: 'Brilliant ideas',
-        html : '<div class="caption-title">Brilliant ideas</div><div class="caption-description">Costello\'s methodical modus operandi includes ironclad alibis involving his lover, Jane (Nathalie Delon). Having carried out a contract on a nightclub owner, he is seen leaving the scene by several witnesses, including piano player Valérie (Cathy Rosier). Their statements are inconsistent but the investigating officer (François Périer) believes Costello is his man.</div>',
-        image: 'https://www.evernote.com/shard/s37/sh/83c744f5-b3c8-4018-b010-1d87ebd2595a/099d9c6ba464bdd066d459bc2f68ec5c/thm/note/83c744f5-b3c8-4018-b010-1d87ebd2595a'
-      },
-      {
-        title: 'Cat',
-        image: 'http://distilleryimage8.s3.amazonaws.com/7b4478a06f1411e3b4cb0a0d88bf3520_6.jpg'
-      },
-      {
-        title: 'slides-about-tartare.pptx',
-        icon: 'file-text-o'
-      },
-      {
-        title: 'Azendoo',
-        image: 'http://distilleryimage8.s3.amazonaws.com/62a2f416b74e11e39abd12c1b09be448_8.jpg'
-      },
-      {
-        title: 'Whisky',
-        image: 'http://distilleryimage7.s3.amazonaws.com/5c267d304f1411e3aecf0ac913b3a2f4_6.jpg'
-      },
-      {
-        title: 'Meeting notes',
-        html : '<div class="caption-title">Meetings note 6th November</div><div class="caption-description">Costello\'s methodical modus operandi includes ironclad alibis involving his lover, Jane (Nathalie Delon). Having carried out a contract on a nightclub owner, he is seen leaving the scene by several witnesses, including piano player Valérie (Cathy Rosier). Their statements are inconsistent but the investigating officer (François Périer) believes Costello is his man.</div>',
-        image: 'https://www.evernote.com/shard/s37/sh/83c744f5-b3c8-4018-b010-1d87ebd2595a/099d9c6ba464bdd066d459bc2f68ec5c/thm/note/83c744f5-b3c8-4018-b010-1d87ebd2595a'
-      },
-      {
-        title: 'Steak',
-        image: 'http://distilleryimage10.s3.amazonaws.com/224bddc6abb211e3870f1228c6f2a262_6.jpg'
-      },
-      {
-        title: 'profile-picture.png',
-        icon: 'picture-o'
-      },
-      {
-        title: 'DEVELOPER',
-        image: 'http://origincache-prn.fbcdn.net/1172000_701055653274694_901094109_a.jpg'
-      }
-    ];
-
-    var appendItem  = {
-      title: 'Appended',
-      icon: 'dot-circle-o'
-    };
-    var prependItem = {
-      title: 'Prepended',
-      icon: 'dot-circle-o'
-    };
-
-    var itemTemplate = function(obj){
-      str  = '<li class="grid-item">';
-
-      if(obj.icon) {
-        str += "<div class=\"icon-container\"><i class=\"fa fa-" + obj.icon + "\"/></div>";
-      }
-      else if (obj.html) {
-        if(obj.image) {
-          str += "<div class=\"caption\" style='background-image:url(\"" + obj.image +"\")'></div>";
-        };
-        str += obj.html;
-      }
-      else if(obj.image) {
-        str += "<div class=\"image\" style='background-image:url(\"" + obj.image +"\")'></div>";
-      };
-      str += "<div class=\"title\">" + obj.title + "</div>";
-      str += '</li>';
-
-      return str;
-    };
-
     $(function(){
       // Bind change event on input
-      var $container = $('ul.grid');
-      var $range     = $('input[type="range"]');
-      var $append    = $('button[name="append"]');
-      var $prepend   = $('button[name="prepend"]');
+      var $container = $('#page-container');
 
-      $range.on('change', function(){
-        width = $range.val();
-        $('#range-value').html(width + '%');
-        $container.css('width', width + '%');
-        $container.tartare('refresh');
-      });
+      var content = 'A finger bowl is a bowl of water used for rinsing one\'s fingers between courses during formal, multiple course meals. It is typically served before the dessert course, arriving with the dessert plate and with a linen doily between plate and bowl. A glass ornament, flower, flower petals, lemon slice, sprig of mint or other decoration is often floated in it. It is especially useful when the main course involves food which cannot be eaten entirely with silverware, such as lobster, clams, or corn on the cob.'
+      content += 'This custom starts with the delivery of the dessert plate with finger bowl and silverware, as one unit. "This is the only time during a formal meal that a guest takes part in placing the appointments for a course"[1]:295; that is, they are responsible for moving the silverware and finger bowl (together with doily) off of the dessert plate. The bowl is "less than half" [2] or as much as "three-quarters"[3]:434 filled with water. Guests lightly dip fingertips into the water, one hand at a time, and then wipe them on the napkin below the table.'
+      content += 'As with most formal customs of etiquette, there are considered to be right and wrong ways to present and use a finger bowl, and these can differ. The acceptability of floating lemon [2] [4] or of using the finger bowl to wet the mouth, [3]:435 [1]:28 for example, are disputed. Unfamiliarity with this custom has led to many common faux pas, including drinking the water, eating the flower, or failing to move the doily with the bowl when shifting it off of the dessert plate. [5]'
+      content += 'The decline of the finger bowl in American restaurants was due the war effort during World War I when everyone was encouraged to minimize excess. However before that, "live music and finger bowls were two amenities put forward as competitive attractions over places that didn’t have them." [4]'
 
-      $append.on('click', function(){
-        $el = $(itemTemplate(appendItem));
-        $container.tartare('append', $el);
-      });
+      for(var i = 1; i < 5; i++) {
+        el = '<article data-fingaboru-page="' + i + '"><h1>Page ' + i + '</h1>' + content + '</article>'
+        $container.append(el)
+      }
 
-      $prepend.on('click', function(){
-        $el = $(itemTemplate(prependItem));
-        $container.tartare('prepend', $el);
-      });
-
-      // Generate items example
-      $.each(items, function(i, v){
-        $container.append( itemTemplate(v) );
-      });
+      $('[data-fingaboru-goto]').on('click', function(e){
+        var index = $(this).attr('data-fingaboru-goto')
+        $container.fingaboru('goto', index)
+      })
 
       // Init tartare plugin
-      $container.tartare();
+      $container.fingaboru()
     });
   </script>
 
@@ -161,15 +47,13 @@
 
     header {
       text-align: center;
-/*      background: url('images/background-header.png');
-      color: #ffffff;*/
       padding: 0 20px;
       text-transform: uppercase;
       line-height: 60px;
     }
 
     header h1 {
-      border-bottom: 5px solid #FF0000;
+      border-bottom: 5px solid #BA55D3;
       display: inline-block;
     }
 
@@ -178,102 +62,38 @@
       margin-bottom: 20px;
     }
 
-    section {
+    section.controls {
       margin: 0 auto;
       padding: 20px 40px;
-    }
-
-    .form-control {
-      height: auto;
-      padding: 0;
-      border: 0;
-      box-shadow: none;
-    }
-
-    label {
-      margin-right: 30px;
-      float: left;
-    }
-
-    label button {
+      max-width: 920px;
       width: 100%;
     }
 
-    ul.grid {
-      display: block;
-      width: 100%;
+    #page-navigation {
       list-style: none;
+      margin: 0;
       padding: 0;
-      position: relative;
     }
 
-    ul.grid li.grid-item {
-      width: 140px;
-      height: 180px;
-      float: left;
+    #page-navigation li {
       display: inline-block;
-      border: 1px solid #D0D0D0;
-      box-shadow: 0 1px 2px #D0D0D0;
-      background-color: white;
-      margin: 0 25px 25px 0;
-      transition: left .35s ease, top .35s ease, width .35s ease;
-      box-sizing: border-box;
-      overflow: hidden;
-      position: absolute;
-    }
-
-    ul.grid li.grid-item .image {
-      background-size: cover;
-      vertical-align: top;
-      height: 160px;
-      max-height: 160px;
-      width: 100%;
-      background-position: 50% 50%;
-      background-repeat: no-repeat no-repeat;
-    }
-
-    ul.grid li.grid-item .title {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 30px;
-      line-height: 28px;
-      background-color: #fff;
-      border-top: 1px solid #E0E0E0;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    .caption {
-      position: relative;
-      top: 5px;
-      left: 5px;
-      width: 70px;
-      height: 70px;
-      display: inline-block;
-      background-size: 70px;
       float: left;
-      margin: 5px 10px 0px 5px;
     }
 
-    .caption-title {
-      font-size: 13px;
+    #page-navigation a {
+      display: inline-block;
       padding: 5px 10px;
-      color: #1e8cf6;
+      border-bottom: 2px solid transparent;
     }
 
-    .caption-description {
-      font-size: 11px;
-      padding: 0 10px;
-      color: #aaa;
+    #page-navigation li a:hover {
+      user-select: none;
+      cursor: pointer;
+      border-bottom: 2px solid #BA55D3;
     }
 
-    .icon-container {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 40px;
-      color: #FF0000;
+    #page-navigation li.active a {
+      border-bottom: 2px solid #BA55D3;
     }
 
     .btn-flat {
@@ -283,8 +103,8 @@
     }
 
     .btn-flat:hover, .btn-flat:active {
-      border: 1px solid #FF0000;
-      color: #FF0000;
+      border: 1px solid #BA55D3;
+      color: #BA55D3;
     }
 
     footer {
@@ -295,43 +115,30 @@
 </head>
 <body>
   <header>
-    <h1>Tartare</h1>
-    <h4>An awesome way to render mixed content in a responsive grid</h4>
+    <h1>Fingaboru</h1>
+    <h4>Enhance your single page app transitions</h4>
   </header>
 
-  <section>
-    <div class="form-control clearfix" id="range-selector">
-      <label for="range">
-        Container width :
-        <span id="range-value">100%</span>
-        <input type="range"
-           min="0"
-           max="100"
-           step="5"
-           value="100">
-      </label>
+  <section class="clearfix controls">
+    <ul id="page-navigation">
+      <li data-fingaboru-goto="previous">
+        <a href="javascript:void(0)"><i class="fa fa-caret-left"></i></a>
+      </li>
+      <li data-fingaboru-goto="1"><a href="javascript:void(0)">Page 1</a></li>
+      <li data-fingaboru-goto="2">Page 2</li>
+      <li data-fingaboru-goto="3">Page 3</li>
+      <li data-fingaboru-goto="4">Page 4</li>
+      <li data-fingaboru-goto="next"><i class="fa fa-caret-right"></i></li>
+    </ul>
 
-      <label for="prepend">
-        <button class="btn btn-default btn-sm" name="prepend">
-          < Prepend item
-        </button>
-      </label>
-
-      <label for="append">
-        <button class="btn btn-default btn-sm" name="append">
-          Append item >
-        </button>
-      </label>
-
-      <a class="btn btn-flat fa fa-github" href="http://github.com/prenaudin/tartare">
-        Go to Github
-      </a>
-    </div>
+    <a class="btn btn-flat fa fa-github" href="http://github.com/prenaudin/fingaboru">
+      Go to Github
+    </a>
   </section>
 
-  <section class="grid-example">
-    <ul class="grid clearfix"></ul>
-  </section>
+  <section id="page-container"></section>
+
+  <script src="//localhost:1337/livereload.js"></script>
 
 </body>
 </html>

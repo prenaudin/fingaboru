@@ -29,6 +29,20 @@ module.exports = function (grunt) {
         dest: 'dist/jquery.<%= pkg.name %>.js'
       }
     },
+    sass: {
+      options: {
+        loadPath: require('node-bourbon').includePaths
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'src',
+          src: ['*.sass'],
+          dest: 'src',
+          ext: '.css'
+        }]
+      }
+    },
     uglify: {
       options: {
         banner: '<%= banner %>'
@@ -74,8 +88,15 @@ module.exports = function (grunt) {
         tasks: ['jshint:gruntfile']
       },
       src: {
-        files: '<%= jshint.src.src %>',
-        tasks: ['jshint:src', 'qunit']
+        files: ['<%= jshint.src.src %>', 'examples/*', 'src/*.js', 'src/*.css'],
+        tasks: ['jshint:src', 'qunit', 'sass'],
+        options: {
+          livereload: 1337,
+        }
+      },
+      sass: {
+        files: ['src/*.sass'],
+        tasks: ['sass']
       },
       test: {
         files: '<%= jshint.test.src %>',
