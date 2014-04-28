@@ -1,0 +1,32 @@
+{
+  "asi"      : true,
+  "boss"     : true,
+  "browser"  : true,
+  "debug"    : true,
+  "devel"    : true,
+  "eqeqeq"   : false,
+  "eqnull"   : true,
+  "expr"     : true,
+  "laxbreak" : true,
+  "unused"   : true,
+  "validthis": true,
+
+  "predef": [
+    "jQuery",
+    "QUnit",
+    "module",
+    "test",
+    "asyncTest",
+    "expect",
+    "start",
+    "stop",
+    "ok",
+    "equal",
+    "notEqual",
+    "deepEqual",
+    "notDeepEqual",
+    "strictEqual",
+    "notStrictEqual",
+    "throws"
+  ]
+}

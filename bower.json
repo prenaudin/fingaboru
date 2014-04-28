@@ -1,0 +1,31 @@
+{
+  "name": "fingaboru",
+  "description": "Enhance your single page app transitions",
+  "version": "0.1.0",
+  "keywords": [
+    "js",
+    "jquery",
+    "transitions",
+    "responsive",
+    "front-end",
+    "library",
+    "web"
+  ],
+  "homepage": "http://prenaudin.github.com/fingaboru/examples",
+  "main": [
+    "src/fingaboru.js"
+  ],
+  "ignore": [
+    ".*",
+    "examples",
+    "test",
+    "Gruntfile.js"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0"
+  },
+  "devDependencies": {
+    "qunit": "~1.12.0",
+    "jquery": ">= 1.9.0"
+  }
+}
