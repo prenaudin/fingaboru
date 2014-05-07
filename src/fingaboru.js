@@ -79,7 +79,15 @@
   }
 
   Fingaboru.prototype.goto = function(pageIndex) {
-    var diff = pageIndex - this.options.pageIndex
+    var diff
+    if(pageIndex === 'previous')
+      pageIndex = this.options.pageIndex-1
+    else if(pageIndex === 'next')
+      pageIndex = this.options.pageIndex+1
+
+    diff = pageIndex - this.options.pageIndex
+
+    if(diff === 0) return
     if(diff > 0)
       this.transitionPage(pageIndex, 'slide-from-right', 'slide-to-left')
     else
@@ -89,9 +97,6 @@
 
   Fingaboru.prototype.transitionPage = function( transitionPage, transitionInEffect, transitionOutEffect ) {
 
-    if ( this.isAnimating ) {
-      return false
-    }
 
     this.isAnimating      = true
     this.isCurrentPageEnd = false

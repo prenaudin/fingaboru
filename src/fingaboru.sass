@@ -12,7 +12,7 @@ $fingaboru-page-transition-duration: 500ms
 
 [data-fingaboru-page]
   position: relative
-  top: 1
+  top: 0
   left: 0
   width: 100%
   height: 100%
@@ -47,23 +47,29 @@ $fingaboru-page-transition-duration: 500ms
 
 
 +keyframes (slideFromRight)
-  from
+  0%
     +transform(translateX(100%))
+  80%
+    +transform(translateX(110%))
 
 +keyframes (slideToRight)
-  from
+  0%
     opacity: 1
-  to
+  20%
+    +transform(translateX(-10%))
+  100%
     opacity: 0
     +transform(translateX(100%))
 
 +keyframes (slideFromLeft)
-  from
+  0%
     +transform(translateX(-100%))
 
 +keyframes (slideToLeft)
-  from
+  0%
     opacity: 1
-  to
+  20%
+    +transform(translateX(10%))
+  100%
     opacity: 0
     +transform(translateX(-100%))
