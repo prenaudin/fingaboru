@@ -6,11 +6,12 @@
  * Licensed under the MIT license.
  */
 
-@import 'bourbon'
+@import "bourbon"
 
-$fingaboru-page-transition-duration: 500ms
+$fingaboru-page-transition-duration : 500ms !default
+$fingaboru-page-selector            : '[data-fingaboru-page]' !default
 
-[data-fingaboru-page]
+#{$fingaboru-page-selector}
   position: relative
   top: 0
   left: 0
@@ -20,7 +21,7 @@ $fingaboru-page-transition-duration: 500ms
   overflow-x: hidden
   visibility: hidden
   z-index: 0
-  padding: 2rem 4rem 0
+  // padding: 2rem 4rem 0
   backface-visibility: hidden
   +transform(translate3d(0, 0, 0))
   +transform-style(preserve-3d)
@@ -44,32 +45,50 @@ $fingaboru-page-transition-duration: 500ms
     +animation(slideFromRight $fingaboru-page-transition-duration forwards ease-in-out)
   &.slide-to-right
     +animation(slideToRight $fingaboru-page-transition-duration forwards ease-in-out)
+  &.slide-from-top
+    +animation(slideFromTop $fingaboru-page-transition-duration forwards ease-in-out)
+  &.slide-to-top
+    +animation(slideToTop $fingaboru-page-transition-duration forwards ease-in-out)
+  &.slide-from-bottom
+    +animation(slideFromBottom $fingaboru-page-transition-duration forwards ease-in-out)
+  &.slide-to-bottom
+    +animation(slideToBottom $fingaboru-page-transition-duration forwards ease-in-out)
 
 
 +keyframes (slideFromRight)
-  0%
+  from
     +transform(translateX(100%))
-  80%
-    +transform(translateX(110%))
 
 +keyframes (slideToRight)
-  0%
+  from
     opacity: 1
-  20%
-    +transform(translateX(-10%))
-  100%
+  to
     opacity: 0
     +transform(translateX(100%))
 
 +keyframes (slideFromLeft)
-  0%
+  from
     +transform(translateX(-100%))
 
 +keyframes (slideToLeft)
-  0%
+  from
     opacity: 1
-  20%
-    +transform(translateX(10%))
-  100%
+  to
     opacity: 0
     +transform(translateX(-100%))
+
++keyframes(slideFromBottom)
+  from
+    transform: translateY(100%)
+
++keyframes(slideToBottom)
+  to
+    transform: translateY(100%)
+
++keyframes(slideFromTop)
+  from
+    transform: translateY(-100%)
+
++keyframes(slideToTop)
+  to
+    transform: translateY(-100%)

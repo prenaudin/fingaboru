@@ -14,7 +14,6 @@
   overflow-x: hidden;
   visibility: hidden;
   z-index: 0;
-  padding: 2rem 4rem 0;
   backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
@@ -51,91 +50,116 @@
     -webkit-animation: slideToRight 500ms forwards ease-in-out;
     -moz-animation: slideToRight 500ms forwards ease-in-out;
     animation: slideToRight 500ms forwards ease-in-out; }
+  [data-fingaboru-page].slide-from-top {
+    -webkit-animation: slideFromTop 500ms forwards ease-in-out;
+    -moz-animation: slideFromTop 500ms forwards ease-in-out;
+    animation: slideFromTop 500ms forwards ease-in-out; }
+  [data-fingaboru-page].slide-to-top {
+    -webkit-animation: slideToTop 500ms forwards ease-in-out;
+    -moz-animation: slideToTop 500ms forwards ease-in-out;
+    animation: slideToTop 500ms forwards ease-in-out; }
+  [data-fingaboru-page].slide-from-bottom {
+    -webkit-animation: slideFromBottom 500ms forwards ease-in-out;
+    -moz-animation: slideFromBottom 500ms forwards ease-in-out;
+    animation: slideFromBottom 500ms forwards ease-in-out; }
+  [data-fingaboru-page].slide-to-bottom {
+    -webkit-animation: slideToBottom 500ms forwards ease-in-out;
+    -moz-animation: slideToBottom 500ms forwards ease-in-out;
+    animation: slideToBottom 500ms forwards ease-in-out; }
 
 @-webkit-keyframes slideFromRight {
-  0% {
-    -webkit-transform: translateX(100%); }
-
-  80% {
-    -webkit-transform: translateX(110%); } }
+  from {
+    -webkit-transform: translateX(100%); } }
 @-moz-keyframes slideFromRight {
-  0% {
-    -moz-transform: translateX(100%); }
-
-  80% {
-    -moz-transform: translateX(110%); } }
+  from {
+    -moz-transform: translateX(100%); } }
 @keyframes slideFromRight {
-  0% {
-    transform: translateX(100%); }
-
-  80% {
-    transform: translateX(110%); } }
+  from {
+    transform: translateX(100%); } }
 @-webkit-keyframes slideToRight {
-  0% {
+  from {
     opacity: 1; }
 
-  20% {
-    -webkit-transform: translateX(-10%); }
-
-  100% {
+  to {
     opacity: 0;
     -webkit-transform: translateX(100%); } }
 @-moz-keyframes slideToRight {
-  0% {
+  from {
     opacity: 1; }
 
-  20% {
-    -moz-transform: translateX(-10%); }
-
-  100% {
+  to {
     opacity: 0;
     -moz-transform: translateX(100%); } }
 @keyframes slideToRight {
-  0% {
+  from {
     opacity: 1; }
 
-  20% {
-    transform: translateX(-10%); }
-
-  100% {
+  to {
     opacity: 0;
     transform: translateX(100%); } }
 @-webkit-keyframes slideFromLeft {
-  0% {
+  from {
     -webkit-transform: translateX(-100%); } }
 @-moz-keyframes slideFromLeft {
-  0% {
+  from {
     -moz-transform: translateX(-100%); } }
 @keyframes slideFromLeft {
-  0% {
+  from {
     transform: translateX(-100%); } }
 @-webkit-keyframes slideToLeft {
-  0% {
+  from {
     opacity: 1; }
 
-  20% {
-    -webkit-transform: translateX(10%); }
-
-  100% {
+  to {
     opacity: 0;
     -webkit-transform: translateX(-100%); } }
 @-moz-keyframes slideToLeft {
-  0% {
+  from {
     opacity: 1; }
 
-  20% {
-    -moz-transform: translateX(10%); }
-
-  100% {
+  to {
     opacity: 0;
     -moz-transform: translateX(-100%); } }
 @keyframes slideToLeft {
-  0% {
+  from {
     opacity: 1; }
 
-  20% {
-    transform: translateX(10%); }
-
-  100% {
+  to {
     opacity: 0;
     transform: translateX(-100%); } }
+@-webkit-keyframes slideFromBottom {
+  from {
+    transform: translateY(100%); } }
+@-moz-keyframes slideFromBottom {
+  from {
+    transform: translateY(100%); } }
+@keyframes slideFromBottom {
+  from {
+    transform: translateY(100%); } }
+@-webkit-keyframes slideToBottom {
+  to {
+    transform: translateY(100%); } }
+@-moz-keyframes slideToBottom {
+  to {
+    transform: translateY(100%); } }
+@keyframes slideToBottom {
+  to {
+    transform: translateY(100%); } }
+@-webkit-keyframes slideFromTop {
+  from {
+    transform: translateY(-100%); } }
+@-moz-keyframes slideFromTop {
+  from {
+    transform: translateY(-100%); } }
+@keyframes slideFromTop {
+  from {
+    transform: translateY(-100%); } }
+@-webkit-keyframes slideToTop {
+  to {
+    transform: translateY(-100%); } }
+@-moz-keyframes slideToTop {
+  to {
+    transform: translateY(-100%); } }
+@keyframes slideToTop {
+  to {
+    transform: translateY(-100%); } }

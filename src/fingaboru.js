@@ -9,18 +9,51 @@
 +function ($) {
   'use strict';
 
-  var animationEndEventNames = {
-    'WebkitAnimation' : 'webkitAnimationEnd',
-    'OAnimation' : 'oAnimationEnd',
-    'msAnimation' : 'MSAnimationEnd',
-    'animation' : 'animationend'
+  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+  // ============================================================
+
+  function animationEnd() {
+    var el = document.createElement('fingaboru')
+
+    var animationEndEventNames = {
+      'WebkitAnimation' : 'webkitAnimationEnd',
+      'OAnimation' : 'oAnimationEnd',
+      'msAnimation' : 'MSAnimationEnd',
+      'animation' : 'animationend'
+    }
+
+    var animationEndName
+
+    for (var animname in animationEndEventNames) {
+      if (el.style[animname] !== undefined) {
+        animationEndName = animationEndEventNames[animname]
+      }
+    }
+
+    if(animationEndName) return { end: animationEndName }
+    return false // explicit for ie8
   }
 
-  var transitionEndEventNames = {
-    'WebkitTransition' : 'webkitTransitionEnd',
-    'OTransition' : 'oTransitionEnd',
-    'msTransition' : 'MSTransitionEnd',
-    'transition' : 'transitionend'
+  // http://blog.alexmaccaw.com/css-transitions
+  $.fn.emulateAnimationEnd = function (duration) {
+    var called = false
+    var $el = this
+    $(this).one('fgbAnimationEnd', function () { called = true })
+    var callback = function () { if (!called) $($el).trigger($.support.animation.end) }
+    setTimeout(callback, duration)
+    return this
+  }
+
+  $.support.animation = animationEnd()
+
+  if ($.support.animation) {
+    $.event.special.fgbAnimationEnd = {
+      bindType: $.support.animation.end,
+      delegateType: $.support.animation.end,
+      handle: function (e) {
+        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
+      }
+    }
   }
 
   // FINGABORU PUBLIC CLASS DEFINITION
@@ -35,21 +68,19 @@
   }
 
    Fingaboru.DEFAULTS = {
-     pageIndex     : 1,
-     pageSelector  : '[data-fingaboru-page]'
+     index     : 1,
+     attr  : 'data-fingaboru-page'
   }
 
   Fingaboru.prototype.init = function (type, element, options) {
     this.type       = type
     this.$element   = $(element)
     this.options    = this.getOptions(options)
-    this.$pages     = this.$element.find(this.options.pageSelector)
+    this.$pages     = this.$element.find(this.options.attr)
 
-    this.transitionEndEventName      = this.getTransitionEndEventNames()
-    this.animationEndEventName       = this.getAnimationEndEventNames()
-    this.transitionAnimationEndEvent = this.animationEndEventName + ' ' + this.transitionEndEventName
-
-    this.from = this.$pages.first().addClass('page-active')
+    var startIndex = this.options.index
+    var selector   = '[' + this.options.attr + '="' + startIndex + '"]'
+    this.from = this.$element.find(selector).addClass('page-active')
     this.to   = null
   }
 
@@ -62,91 +93,70 @@
     return options
   }
 
-  Fingaboru.prototype.getTransitionEndEventNames = function () {
-    return this.getEndEventNames( transitionEndEventNames )
-  }
+  Fingaboru.prototype.goto = function(options) {
+    options = $.extend({}, {
+        index : 1,
+        animate   : true }, options)
+    var index = options.index
 
-  Fingaboru.prototype.getAnimationEndEventNames = function () {
-    return this.getEndEventNames( animationEndEventNames )
-  }
-
-  Fingaboru.prototype.getEndEventNames = function (obj) {
-    var events = []
-    for ( var eventName in obj ) {
-      events.push( obj[ eventName ] )
-    }
-    return events.join(' ')
-  }
-
-  Fingaboru.prototype.goto = function(pageIndex) {
     var diff
-    if(pageIndex === 'previous')
-      pageIndex = this.options.pageIndex-1
-    else if(pageIndex === 'next')
-      pageIndex = this.options.pageIndex+1
+    if(index === 'previous')
+      index = this.options.index-1
+    else if(index === 'next')
+      index = this.options.index+1
 
-    diff = pageIndex - this.options.pageIndex
+    diff = index - this.options.index
 
-    if(diff === 0) return
+    if(options.animate === false) {
+      this.selectPage(index)
+      this.from.removeClass('page-active')
+      this.to.addClass('page-active')
+      return
+    }
+
+    if(diff === 0) {
+      this.complete()
+      return
+    }
+
     if(diff > 0)
-      this.transitionPage(pageIndex, 'slide-from-right', 'slide-to-left')
+      this.transitionPage(index, 'slide-from-right', 'slide-to-left')
     else
-      this.transitionPage(pageIndex, 'slide-from-left', 'slide-to-right')
-    this.options.pageIndex = pageIndex
+      this.transitionPage(index, 'slide-from-left', 'slide-to-right')
+    this.options.index = index
+  }
+
+  Fingaboru.prototype.selectPage = function( transitionPage ) {
+    this.from = this.$element.find('[' + this.options.attr + '].page-active')
+    this.to   = this.$element.find('[' + this.options.attr + '="' + transitionPage + '"]')
   }
 
   Fingaboru.prototype.transitionPage = function( transitionPage, transitionInEffect, transitionOutEffect ) {
-
+    if (this.isAnimating) {
+      this.complete()
+    }
 
     this.isAnimating      = true
-    this.isCurrentPageEnd = false
-    this.isNextPageEnd    = false
     this.transitionInEffect  = transitionInEffect
     this.transitionOutEffect = transitionOutEffect
 
-    // Get Pages
-    this.from = this.$element.find('[data-fingaboru-page].page-active')
-    this.to   = this.$element.find('[data-fingaboru-page="' + transitionPage + '"]')
+    this.selectPage(transitionPage)
 
-    // Add this class to prevent scroll to be displayed
     this.to.addClass('page-animating page-active ' + this.transitionInEffect)
-    this.from.addClass('page-animating')
+    this.from.addClass('page-animating ' + this.transitionOutEffect)
 
-    // Set Transition Class
-    this.from.addClass(this.transitionOutEffect)
-
-    var self= this
-
-    this.to.on( this.transitionAnimationEndEvent, function() {
-
-      self.to.off( self.transitionAnimationEndEvent )
-      self.isNextPageEnd = true
-
-      if ( self.isCurrentPageEnd ) {
-        self.resetTransition()
-      }
-    })
-
-    this.from.on( this.transitionAnimationEndEvent, function () {
-
-      self.from.off( this.transitionAnimationEndEvent )
-      self.isCurrentPageEnd = true
-
-      if ( self.isNextPageEnd ) {
-        self.resetTransition()
-      }
-    })
+    $.support.animation ?
+      this.to
+        .one('fgbAnimationEnd', $.proxy(this.complete, this))
+        .emulateAnimationEnd(500) :
+      this.complete()
   }
 
-  Fingaboru.prototype.resetTransition = function() {
-    this.isAnimating      = false
-    this.isCurrentPageEnd = false
-    this.isNextPageEnd    = false
-
+  Fingaboru.prototype.complete = function() {
+    this.isAnimating = false
     this.from.removeClass('page-animating page-active ' + this.transitionOutEffect)
     this.to.removeClass('page-animating ' + this.transitionInEffect)
-
-    $("html").removeClass("md-perspective")
+    this.$element.trigger($.Event('shown.fingaboru'))
   }
 
   Fingaboru.prototype.destroy = function () {
@@ -167,7 +177,7 @@
       if (!data) $this.data('fingaboru', (data = new Fingaboru(this, options)))
       if (typeof option == 'string') data[option](params)
     })
-  };
+  }
 
   $.fn.fingaboru.Constructor = Fingaboru
 

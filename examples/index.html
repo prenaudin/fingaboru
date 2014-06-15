@@ -33,7 +33,7 @@
 
       $('[data-fingaboru-goto]').on('click', function(e){
         var index = $(this).attr('data-fingaboru-goto')
-        $container.fingaboru('goto', index)
+        $container.fingaboru('goto', { index: index })
       })
 
       // Init tartare plugin
