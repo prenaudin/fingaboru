@@ -110,12 +110,8 @@
     this.options.index = index
 
     if(options.animate === false || diff === 0) {
-      console.log('FGB - diff', diff)
-      console.log('FGB - to', this.to)
       this.to.addClass('page-active')
-      console.log('FGB - to class', this.to.attr('class'))
       this.complete()
-      console.log('FGB - to class', this.to.attr('class'))
       return
     }
 
@@ -153,7 +149,7 @@
 
   Fingaboru.prototype.complete = function() {
     this.isAnimating = false
-    if (this.from.get(0) !== this.to.get(0)) this.from.removeClass('active')
+    if (this.from.get(0) !== this.to.get(0)) this.from.removeClass('page-active')
 
     this.from.removeClass('page-animating ' + this.transitionOutEffect)
     this.to.removeClass('page-animating ' + this.transitionInEffect)
