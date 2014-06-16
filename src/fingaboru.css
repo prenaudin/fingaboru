@@ -4,6 +4,7 @@
  * Copyright (c) 2014 Pierre Renaudin
  * Licensed under the MIT license.
  */
+/* TRANSFORM  */
 [data-fingaboru-page] {
   position: relative;
   top: 0;
@@ -17,13 +18,13 @@
   backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
-  -ms-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
   transform-style: preserve-3d;
   display: none; }
   [data-fingaboru-page].page-active {
@@ -37,44 +38,71 @@
   [data-fingaboru-page].slide-from-left {
     -webkit-animation: slideFromLeft 500ms forwards ease-in-out;
     -moz-animation: slideFromLeft 500ms forwards ease-in-out;
+    -ms-animation: slideFromLeft 500ms forwards ease-in-out;
     animation: slideFromLeft 500ms forwards ease-in-out; }
   [data-fingaboru-page].slide-to-left {
     -webkit-animation: slideToLeft 500ms forwards ease-in-out;
     -moz-animation: slideToLeft 500ms forwards ease-in-out;
+    -ms-animation: slideToLeft 500ms forwards ease-in-out;
     animation: slideToLeft 500ms forwards ease-in-out; }
   [data-fingaboru-page].slide-from-right {
     -webkit-animation: slideFromRight 500ms forwards ease-in-out;
     -moz-animation: slideFromRight 500ms forwards ease-in-out;
+    -ms-animation: slideFromRight 500ms forwards ease-in-out;
     animation: slideFromRight 500ms forwards ease-in-out; }
   [data-fingaboru-page].slide-to-right {
     -webkit-animation: slideToRight 500ms forwards ease-in-out;
     -moz-animation: slideToRight 500ms forwards ease-in-out;
+    -ms-animation: slideToRight 500ms forwards ease-in-out;
     animation: slideToRight 500ms forwards ease-in-out; }
   [data-fingaboru-page].slide-from-top {
     -webkit-animation: slideFromTop 500ms forwards ease-in-out;
     -moz-animation: slideFromTop 500ms forwards ease-in-out;
+    -ms-animation: slideFromTop 500ms forwards ease-in-out;
     animation: slideFromTop 500ms forwards ease-in-out; }
   [data-fingaboru-page].slide-to-top {
     -webkit-animation: slideToTop 500ms forwards ease-in-out;
     -moz-animation: slideToTop 500ms forwards ease-in-out;
+    -ms-animation: slideToTop 500ms forwards ease-in-out;
     animation: slideToTop 500ms forwards ease-in-out; }
   [data-fingaboru-page].slide-from-bottom {
     -webkit-animation: slideFromBottom 500ms forwards ease-in-out;
     -moz-animation: slideFromBottom 500ms forwards ease-in-out;
+    -ms-animation: slideFromBottom 500ms forwards ease-in-out;
     animation: slideFromBottom 500ms forwards ease-in-out; }
   [data-fingaboru-page].slide-to-bottom {
     -webkit-animation: slideToBottom 500ms forwards ease-in-out;
     -moz-animation: slideToBottom 500ms forwards ease-in-out;
+    -ms-animation: slideToBottom 500ms forwards ease-in-out;
     animation: slideToBottom 500ms forwards ease-in-out; }
 
 @-webkit-keyframes slideFromRight {
   from {
-    -webkit-transform: translateX(100%); } }
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%); } }
 @-moz-keyframes slideFromRight {
   from {
-    -moz-transform: translateX(100%); } }
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%); } }
+@-ms-keyframes slideFromRight {
+  from {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%); } }
 @keyframes slideFromRight {
   from {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
     transform: translateX(100%); } }
 @-webkit-keyframes slideToRight {
   from {
@@ -82,29 +110,71 @@
 
   to {
     opacity: 0;
-    -webkit-transform: translateX(100%); } }
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%); } }
 @-moz-keyframes slideToRight {
   from {
     opacity: 1; }
 
   to {
     opacity: 0;
-    -moz-transform: translateX(100%); } }
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%); } }
+@-ms-keyframes slideToRight {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%); } }
 @keyframes slideToRight {
   from {
     opacity: 1; }
 
   to {
     opacity: 0;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
     transform: translateX(100%); } }
 @-webkit-keyframes slideFromLeft {
   from {
-    -webkit-transform: translateX(-100%); } }
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%); } }
 @-moz-keyframes slideFromLeft {
   from {
-    -moz-transform: translateX(-100%); } }
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%); } }
+@-ms-keyframes slideFromLeft {
+  from {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%); } }
 @keyframes slideFromLeft {
   from {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
     transform: translateX(-100%); } }
 @-webkit-keyframes slideToLeft {
   from {
@@ -112,25 +182,51 @@
 
   to {
     opacity: 0;
-    -webkit-transform: translateX(-100%); } }
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%); } }
 @-moz-keyframes slideToLeft {
   from {
     opacity: 1; }
 
   to {
     opacity: 0;
-    -moz-transform: translateX(-100%); } }
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%); } }
+@-ms-keyframes slideToLeft {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%); } }
 @keyframes slideToLeft {
   from {
     opacity: 1; }
 
   to {
     opacity: 0;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
     transform: translateX(-100%); } }
 @-webkit-keyframes slideFromBottom {
   from {
     transform: translateY(100%); } }
 @-moz-keyframes slideFromBottom {
+  from {
+    transform: translateY(100%); } }
+@-ms-keyframes slideFromBottom {
   from {
     transform: translateY(100%); } }
 @keyframes slideFromBottom {
@@ -142,6 +238,9 @@
 @-moz-keyframes slideToBottom {
   to {
     transform: translateY(100%); } }
+@-ms-keyframes slideToBottom {
+  to {
+    transform: translateY(100%); } }
 @keyframes slideToBottom {
   to {
     transform: translateY(100%); } }
@@ -151,6 +250,9 @@
 @-moz-keyframes slideFromTop {
   from {
     transform: translateY(-100%); } }
+@-ms-keyframes slideFromTop {
+  from {
+    transform: translateY(-100%); } }
 @keyframes slideFromTop {
   from {
     transform: translateY(-100%); } }
@@ -158,6 +260,9 @@
   to {
     transform: translateY(-100%); } }
 @-moz-keyframes slideToTop {
+  to {
+    transform: translateY(-100%); } }
+@-ms-keyframes slideToTop {
   to {
     transform: translateY(-100%); } }
 @keyframes slideToTop {

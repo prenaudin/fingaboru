@@ -6,10 +6,40 @@
  * Licensed under the MIT license.
  */
 
-@import "bourbon"
-
 $fingaboru-page-transition-duration : 500ms !default
 $fingaboru-page-selector            : '[data-fingaboru-page]' !default
+
+// keyframes mixin : https://gist.github.com/ericam/1607696
+=keyframes($name)
+  @-webkit-keyframes #{$name}
+    @content
+  @-moz-keyframes #{$name}
+    @content
+  @-ms-keyframes #{$name}
+    @content
+  @keyframes #{$name}
+    @content
+
+/* TRANSFORM  */
+=transform($params)
+  -webkit-transform: $params
+  -moz-transform:    $params
+  -o-transform:      $params
+  -ms-transform:     $params
+  transform:         $params
+
+=transform-style($val)
+  -webkit-transform-style: $val
+  -moz-transform-style: $val
+  -o-transform-style: $val
+  -ms-transform-style: $val
+  transform-style: $val
+
+=animation($animations...)
+  -webkit-animation: $animations
+  -moz-animation: $animations
+  -ms-animation: $animations
+  animation: $animations
 
 #{$fingaboru-page-selector}
   position: relative
