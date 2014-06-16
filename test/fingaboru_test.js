@@ -108,6 +108,13 @@
     $el.fingaboru('goto', { index: 2 })
   })
 
+  test('should stay on the same page if page has the same index than previous one', function(){
+    var $el = $(pageContent).appendTo('#qunit-fixture').fingaboru({index: 1})
+    $el.fingaboru('goto', { index: 1 })
+    console.log($el.find('[data-fingaboru-page="1"]').attr('class'))
+    ok($el.find('[data-fingaboru-page="1"]').is('.page-active'))
+  })
+
   test('should destroy fingaboru', function () {
     var fingaboru = $('<div/>').appendTo('#qunit-fixture').fingaboru()
     ok(fingaboru.data('fingaboru'), 'fingaboru has data')

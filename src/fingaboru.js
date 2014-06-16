@@ -106,16 +106,16 @@
       index = this.options.index+1
 
     diff = index - this.options.index
+    this.selectPage(index)
+    this.options.index = index
 
-    if(options.animate === false) {
-      this.selectPage(index)
-      this.from.removeClass('page-active')
+    if(options.animate === false || diff === 0) {
+      console.log('FGB - diff', diff)
+      console.log('FGB - to', this.to)
       this.to.addClass('page-active')
-      return
-    }
-
-    if(diff === 0) {
+      console.log('FGB - to class', this.to.attr('class'))
       this.complete()
+      console.log('FGB - to class', this.to.attr('class'))
       return
     }
 
@@ -123,7 +123,6 @@
       this.transitionPage(index, 'slide-from-right', 'slide-to-left')
     else
       this.transitionPage(index, 'slide-from-left', 'slide-to-right')
-    this.options.index = index
   }
 
   Fingaboru.prototype.selectPage = function( transitionPage ) {
@@ -154,8 +153,11 @@
 
   Fingaboru.prototype.complete = function() {
     this.isAnimating = false
-    this.from.removeClass('page-animating page-active ' + this.transitionOutEffect)
+    if (this.from.get(0) !== this.to.get(0)) this.from.removeClass('active')
+
+    this.from.removeClass('page-animating ' + this.transitionOutEffect)
     this.to.removeClass('page-animating ' + this.transitionInEffect)
+
     this.$element.trigger($.Event('shown.fingaboru'))
   }
 
